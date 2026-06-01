@@ -25,6 +25,9 @@ kubeconfig
 *credentials*
 *secret*
 
+# --- Markdown files ---
+*.md
+
 # --- Temp and tooling files ---
 *.log
 *.tmp
