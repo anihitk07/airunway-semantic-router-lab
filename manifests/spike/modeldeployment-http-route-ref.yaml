@@ -1,0 +1,15 @@
+apiVersion: airunway.ai/v1alpha1
+kind: ModelDeployment
+metadata:
+  name: __MODEL_NAME__
+  namespace: __MODEL_NAMESPACE__
+spec:
+  model:
+    id: "__MODEL_ID__"
+  provider:
+    name: __PROVIDER_NAME__
+  engine:
+    type: __ENGINE_TYPE__
+  gateway:
+    enabled: true
+    httpRouteRef: "__HTTP_ROUTE_REF__"

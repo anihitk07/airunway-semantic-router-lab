@@ -1,0 +1,54 @@
+config:
+  version: v0.3
+  listeners: []
+  providers:
+    defaults:
+      default_model: base-model
+    models:
+      - name: base-model
+        backend_refs:
+          - name: local-vllm
+            endpoint: __BACKEND_HOST__:__BACKEND_PORT__
+            weight: 1
+  routing:
+    decisions:
+      - name: math_decision
+        priority: 10
+        rules:
+          operator: OR
+          conditions:
+            - type: domain
+              name: math
+        modelRefs:
+          - model: base-model
+            use_reasoning: true
+      - name: science_decision
+        priority: 10
+        rules:
+          operator: OR
+          conditions:
+            - type: domain
+              name: science
+        modelRefs:
+          - model: base-model
+            use_reasoning: false
+      - name: general_decision
+        priority: 1
+        rules:
+          operator: OR
+          conditions:
+            - type: domain
+              name: other
+        modelRefs:
+          - model: base-model
+            use_reasoning: false
+    signals:
+      domains:
+        - name: math
+          description: Mathematics and quantitative reasoning
+        - name: science
+          description: Science and engineering topics
+        - name: other
+          description: General requests
+    modelCards:
+      - name: base-model

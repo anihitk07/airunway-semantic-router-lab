@@ -1,0 +1,30 @@
+config:
+  version: v0.3
+  listeners: []
+  providers:
+    defaults:
+      default_model: __AIRUNWAY_MODEL_ID__
+    models:
+      - name: __AIRUNWAY_MODEL_ID__
+        backend_refs:
+          - name: airunway-backend
+            endpoint: __BACKEND_HOST__:__BACKEND_PORT__
+            weight: 1
+  routing:
+    decisions:
+      - name: direct_backend
+        priority: 1
+        rules:
+          operator: OR
+          conditions:
+            - type: domain
+              name: other
+        modelRefs:
+          - model: __AIRUNWAY_MODEL_ID__
+            use_reasoning: false
+    signals:
+      domains:
+        - name: other
+          description: Default domain for direct pass-through
+    modelCards:
+      - name: __AIRUNWAY_MODEL_ID__

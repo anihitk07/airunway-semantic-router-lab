@@ -1,0 +1,30 @@
+apiVersion: airunway.ai/v1alpha1
+kind: ModelDeployment
+metadata:
+  name: __MODEL_NAME__
+  namespace: __MODEL_NAMESPACE__
+spec:
+  model:
+    id: "__MODEL_ID__"
+  provider:
+    name: __PROVIDER_NAME__
+  engine:
+    type: __ENGINE_TYPE__
+    trustRemoteCode: false
+  resources:
+    gpu:
+      count: __GPU_COUNT__
+      type: nvidia.com/gpu
+  scaling:
+    replicas: 1
+  nodeSelector:
+    __GPU_LABEL_KEY__: "__GPU_LABEL_VALUE__"
+  tolerations:
+  - key: sku
+    operator: Equal
+    value: gpu
+    effect: NoSchedule
+  - key: kubernetes.azure.com/scalesetpriority
+    operator: Equal
+    value: spot
+    effect: NoSchedule

@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: __COMPARISON_GATEWAY_NAME__
+  namespace: __COMPARISON_GATEWAY_NAMESPACE__
+  labels:
+    airunway.ai/inference-gateway: "true"
+  annotations:
+    service.beta.kubernetes.io/port_80_health-probe_protocol: tcp
+spec:
+  gatewayClassName: __COMPARISON_GATEWAY_CLASS__
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
